@@ -1,9 +1,13 @@
 package com.emirim.hyejin.findclassroom;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,11 +56,16 @@ public class Floor3  extends AppCompatActivity {
 
         for(int i=0; i<space.length; i++) {
             if(i == 2 || i == 57 || i == 13 || i == 51 || i == 18 || i == 56) continue;
+            else if(i % 5 == 2) continue;
 
             space[i].setOnClickListener(new IndexOnClickListener(i) {
                 @Override
                 public void onClick(View v) {
                     if(spaceValue[index] != null) {
+                        final Dialog dialog = new Dialog(Floor3.this);
+                        dialog.setContentView(R.layout.dialog_modal);
+
+                        ImageView resultImage = (ImageView) findViewById(R.id.resultImage);
                         if (Data.answer[Data.currentStage - 1][Data.currentMissionStage - 1] == spaceValue[index]) {
                             if(Data.currentStage != 3) {
                                 Data.currentStage += 1;
@@ -67,9 +76,23 @@ public class Floor3  extends AppCompatActivity {
                             } else {
                                 // Stage 변경
                                 Data.currentStage ++;
+
+                                resultImage.setImageResource(R.drawable.success);
                             }
                         } else {
                             // 정답이 아닐 경우 행동 **
+                        }
+
+                        try {
+                            dialog.show();
+
+                            new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                                 @Override
+                                 public void run() {
+                                    dialog.dismiss();
+                                 } }, 2000);
+                        } catch(Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 }
