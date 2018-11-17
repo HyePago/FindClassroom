@@ -1,14 +1,18 @@
 package com.emirim.hyejin.findclassroom;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 // 2층
 public class Floor2  extends AppCompatActivity {
     public ImageView space[];
     public String spaceValue[];
+    public ImageView hallway[];
+    public TextView timeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +21,12 @@ public class Floor2  extends AppCompatActivity {
 
         // 현재 위치 저장
         Data.currentFloor = 2;
+        timeText = (TextView)findViewById(R.id.timeText);
+        timeText.setText("2층");
 
+        hallway = new ImageView[] {
+                (ImageView)findViewById(R.id.td61), (ImageView)findViewById(R.id.td62),  (ImageView)findViewById(R.id.td63), (ImageView)findViewById(R.id.td64), (ImageView)findViewById(R.id.td65)
+        };
         space = new ImageView[]{
                 (ImageView)findViewById(R.id.td1), (ImageView)findViewById(R.id.td2),  (ImageView)findViewById(R.id.td3), (ImageView)findViewById(R.id.td4), (ImageView)findViewById(R.id.td5),  (ImageView)findViewById(R.id.td6),  (ImageView)findViewById(R.id.td7),  (ImageView)findViewById(R.id.td8), (ImageView)findViewById(R.id.td9), (ImageView)findViewById(R.id.td10),
                 (ImageView)findViewById(R.id.td11), (ImageView)findViewById(R.id.td12),  (ImageView)findViewById(R.id.td13),  (ImageView)findViewById(R.id.td14), (ImageView)findViewById(R.id.td15),  (ImageView)findViewById(R.id.td16),  (ImageView)findViewById(R.id.td17),  (ImageView)findViewById(R.id.td18), (ImageView)findViewById(R.id.td19), (ImageView)findViewById(R.id.td20),
@@ -81,7 +90,8 @@ public class Floor2  extends AppCompatActivity {
                 public void onClick(View v) {
                     if(Data.currentFloor != 4) {
                         Data.currentFloor += 1;
-                        // Intent **
+                        startActivity(new Intent(Floor2.this, Floor3.class));
+                        finish();
                     }
                 }
             });
@@ -94,29 +104,36 @@ public class Floor2  extends AppCompatActivity {
                 public void onClick(View v) {
                     if(Data.currentFloor != -1) {
                         Data.currentFloor -= 1;
-                        // Intent **
                     }
                 }
             });
         }
 
-        // 솔루션 2실
+        // 복도 이동
+        for(int i=0; i<hallway.length; i++) {
+            hallway[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 복도 이동하는 작업 추가
+                }
+            });
+        }
+
+        // 교사 휴게실
         space[0].setImageResource(R.drawable.square2);
         space[1].setImageResource(R.drawable.square2);
         space[5].setImageResource(R.drawable.square2);
         space[6].setImageResource(R.drawable.square2);
 
-        // 솔루션 1실
+        // 3교무실
         space[3].setImageResource(R.drawable.square2);
         space[4].setImageResource(R.drawable.square2);
         space[8].setImageResource(R.drawable.square2);
         space[9].setImageResource(R.drawable.square2);
 
-        // 동아리 실 (앱반)
+        // 2교무실
         space[10].setImageResource(R.drawable.square2);
         space[11].setImageResource(R.drawable.square2);
-
-        // 전산실
         space[15].setImageResource(R.drawable.square2);
         space[16].setImageResource(R.drawable.square2);
 
@@ -124,25 +141,23 @@ public class Floor2  extends AppCompatActivity {
         space[14].setImageResource(R.drawable.square2);
         space[19].setImageResource(R.drawable.square2);
 
-        // 동아리실 (미벤)
+        // 상담실(2교무실 부속)
         space[20].setImageResource(R.drawable.square2);
         space[21].setImageResource(R.drawable.square2);
 
-        // 동아리실 (웹진)
+        // 수준별 교육실 1
         space[23].setImageResource(R.drawable.square2);
         space[24].setImageResource(R.drawable.square2);
 
-        // 디자인 1실
+        // 과학 준비실
         space[25].setImageResource(R.drawable.square2);
         space[26].setImageResource(R.drawable.square2);
-        space[30].setImageResource(R.drawable.square2);
-        space[31].setImageResource(R.drawable.square2);
 
-        // 조교실
+        // 수준별 교육실 2
         space[28].setImageResource(R.drawable.square2);
         space[29].setImageResource(R.drawable.square2);
 
-        // 디자인 2실
+        // 보건 교육실
         space[33].setImageResource(R.drawable.square2);
         space[34].setImageResource(R.drawable.square2);
         space[38].setImageResource(R.drawable.square2);
@@ -150,9 +165,13 @@ public class Floor2  extends AppCompatActivity {
         space[43].setImageResource(R.drawable.square2);
         space[44].setImageResource(R.drawable.square2);
 
-        // 앱창작터 1실
+        // 과학실
+        space[30].setImageResource(R.drawable.square2);
+        space[31].setImageResource(R.drawable.square2);
         space[35].setImageResource(R.drawable.square2);
         space[36].setImageResource(R.drawable.square2);
+
+        // 보건실
         space[40].setImageResource(R.drawable.square2);
         space[41].setImageResource(R.drawable.square2);
         space[45].setImageResource(R.drawable.square2);
@@ -163,10 +182,10 @@ public class Floor2  extends AppCompatActivity {
         space[55].setImageResource(R.drawable.square2);
 
         // 계단 버튼
-        space[13].setImageResource(R.drawable.square2); // 상승
-        space[51].setImageResource(R.drawable.square2); // 상승
-        space[18].setImageResource(R.drawable.square2); // 하락
-        space[56].setImageResource(R.drawable.square2); // 하락
+        space[13].setImageResource(R.drawable.up); // 상승
+        space[51].setImageResource(R.drawable.up); // 상승
+        space[18].setImageResource(R.drawable.down); // 하락
+        space[56].setImageResource(R.drawable.down); // 하락
 
         // 식수대
         space[49].setImageResource(R.drawable.square2);

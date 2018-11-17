@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Floor2" />
+        <activity android:name=".Floor3" />
     </application>
 
 </manifest>

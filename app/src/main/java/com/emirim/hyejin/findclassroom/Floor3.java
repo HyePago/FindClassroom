@@ -1,15 +1,18 @@
 package com.emirim.hyejin.findclassroom;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 // 3층
 public class Floor3  extends AppCompatActivity {
     public ImageView space[];
     public ImageView hallway[];
     public String spaceValue[];
+    public TextView timeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +20,9 @@ public class Floor3  extends AppCompatActivity {
         setContentView(R.layout.activity_floor2);
 
         // 현재 위치 저장
-        Data.currentFloor = 2;
+        Data.currentFloor = 3;
+        timeText = (TextView)findViewById(R.id.timeText);
+        timeText.setText("3층");
 
         hallway = new ImageView[] {
                 (ImageView)findViewById(R.id.td61), (ImageView)findViewById(R.id.td62),  (ImageView)findViewById(R.id.td63), (ImageView)findViewById(R.id.td64), (ImageView)findViewById(R.id.td65)
@@ -85,7 +90,6 @@ public class Floor3  extends AppCompatActivity {
                 public void onClick(View v) {
                     if(Data.currentFloor != 4) {
                         Data.currentFloor += 1;
-                        // Intent **
                     }
                 }
             });
@@ -98,7 +102,8 @@ public class Floor3  extends AppCompatActivity {
                 public void onClick(View v) {
                     if(Data.currentFloor != -1) {
                         Data.currentFloor -= 1;
-                        // Intent **
+                        startActivity(new Intent(Floor3.this, Floor2.class));
+                        finish();
                     }
                 }
             });
@@ -177,10 +182,10 @@ public class Floor3  extends AppCompatActivity {
         space[55].setImageResource(R.drawable.square2);
 
         // 계단 버튼
-        space[13].setImageResource(R.drawable.square2); // 상승
-        space[51].setImageResource(R.drawable.square2); // 상승
-        space[18].setImageResource(R.drawable.square2); // 하락
-        space[56].setImageResource(R.drawable.square2); // 하락
+        space[13].setImageResource(R.drawable.up); // 상승
+        space[51].setImageResource(R.drawable.up); // 상승
+        space[18].setImageResource(R.drawable.down); // 하락
+        space[56].setImageResource(R.drawable.down); // 하락
 
         // 식수대
         space[49].setImageResource(R.drawable.square2);
