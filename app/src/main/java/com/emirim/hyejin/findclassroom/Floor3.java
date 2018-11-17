@@ -2,6 +2,7 @@ package com.emirim.hyejin.findclassroom;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -84,6 +85,7 @@ public class Floor3  extends AppCompatActivity {
                         }
 
                         try {
+                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                             dialog.show();
 
                             new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
