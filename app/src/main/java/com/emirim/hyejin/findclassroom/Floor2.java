@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,11 @@ public class Floor2  extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 Data.time--;
                 timeText.setText(Data.time + "");
+
+
+                if(Data.time < 1) {
+                    // Intent
+                }
             }
 
             public void onFinish() {
@@ -77,37 +83,71 @@ public class Floor2  extends AppCompatActivity {
                             final Dialog dialog = new Dialog(Floor2.this);
                             dialog.setContentView(R.layout.dialog_modal);
 
-                            ImageView resultImage = (ImageView) dialog.findViewById(R.id.resultImage);
-
-                            if(Data.currentStage != 3) {
-                                Data.currentStage += 1;
-                            }
                             // 정답일 경우 행동 **
                             if(Data.currentMissionStage == 1) {
                                 Data.currentMissionStage ++;
+
+                                final ImageView resultImage = (ImageView) dialog.findViewById(R.id.resultImage);
+
+                                try {
+                                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                    dialog.show();
+
+                                    new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                                        @Override
+                                        public void run() {
+                                            dialog.dismiss();
+                                        } }, 2000);
+                                } catch(Exception e) {
+                                    e.printStackTrace();
+                                }
                             } else {
                                 // Stage 변경
+                                dialog.setContentView(R.layout.dialog_modal_success);
+
+                                final ImageView resultImage = (ImageView) dialog.findViewById(R.id.resultImage);
+                                final Button nextBtn = (Button) dialog.findViewById(R.id.nextBtn);
+
+                                if(Data.currentStage != 3) {
+                                    Data.currentStage += 1;
+                                }
+
                                 Data.currentStage ++;
                                 Data.time = 30;
 
                                 resultImage.setImageResource(R.drawable.success);
-                            }
-
-                            try {
-                                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                                 dialog.show();
 
-                                new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                                nextBtn.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void run() {
+                                    public void onClick(View v) {
                                         dialog.dismiss();
-                                    } }, 2000);
-                            } catch(Exception e) {
-                                e.printStackTrace();
+
+                                        dialog.setContentView(R.layout.dialog_modal);
+                                        final ImageView resultImage2 = (ImageView) dialog.findViewById(R.id.resultImage);
+                                        resultImage2.setImageResource(R.drawable.success);
+
+                                        try {
+                                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                            dialog.show();
+
+                                            new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                                                @Override
+                                                public void run() {
+                                                    dialog.dismiss();
+
+                                                    resultImage.setImageResource(R.drawable.success);
+                                                } }, 2000);
+                                        } catch(Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
                         } else {
                             // 정답이 아닐 경우 행동 **
                             // Intent
+
                         }
                     }
                 }
