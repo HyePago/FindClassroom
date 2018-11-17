@@ -80,10 +80,12 @@ public class Floor3  extends AppCompatActivity {
             space[i].setOnClickListener(new IndexOnClickListener(i) {
                 @Override
                 public void onClick(View v) {
+
+                    final Dialog dialog = new Dialog(Floor3.this);
+                    dialog.setContentView(R.layout.dialog_modal);
+
                     if(spaceValue[index] != null) {
                         if (Data.answer[Data.currentStage - 1][Data.currentMissionStage - 1] == spaceValue[index]) {
-                            final Dialog dialog = new Dialog(Floor3.this);
-                            dialog.setContentView(R.layout.dialog_modal);
 
                             // 정답일 경우 행동 **
                             if(Data.currentMissionStage == 1) {
@@ -150,6 +152,22 @@ public class Floor3  extends AppCompatActivity {
                             // 정답이 아닐 경우 행동 **
                             // Intent
 
+                            final ImageView resultImage = (ImageView) dialog.findViewById(R.id.resultImage);
+
+                            try {
+                                resultImage.setImageResource(R.drawable.success);
+
+                                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                dialog.show();
+
+                                new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                                    @Override
+                                    public void run() {
+                                        dialog.dismiss();
+                                    } }, 2000);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }

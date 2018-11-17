@@ -37,11 +37,13 @@ public class Floor2  extends AppCompatActivity {
 
                 if(Data.time < 1) {
                     // Intent
+                    // startActivity(new Intent(Floor2.this, Finisha.class));
                 }
             }
 
             public void onFinish() {
                 // Intent
+                // startActivity(new Intent(Floor2.this, Finisha.class));
             }
         }.start();
 
@@ -79,10 +81,10 @@ public class Floor2  extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(spaceValue[index] != null) {
-                        if (Data.answer[Data.currentStage - 1][Data.currentMissionStage - 1] == spaceValue[index]) {
-                            final Dialog dialog = new Dialog(Floor2.this);
-                            dialog.setContentView(R.layout.dialog_modal);
+                        final Dialog dialog = new Dialog(Floor2.this);
+                        dialog.setContentView(R.layout.dialog_modal);
 
+                        if (Data.answer[Data.currentStage - 1][Data.currentMissionStage - 1] == spaceValue[index]) {
                             // 정답일 경우 행동 **
                             if(Data.currentMissionStage == 1) {
                                 Data.currentMissionStage ++;
@@ -148,6 +150,22 @@ public class Floor2  extends AppCompatActivity {
                             // 정답이 아닐 경우 행동 **
                             // Intent
 
+                            final ImageView resultImage = (ImageView) dialog.findViewById(R.id.resultImage);
+
+                            try {
+                                resultImage.setImageResource(R.drawable.success);
+
+                                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                dialog.show();
+
+                                new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                                    @Override
+                                    public void run() {
+                                        dialog.dismiss();
+                                    } }, 2000);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -193,6 +211,8 @@ public class Floor2  extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // 복도 이동하는 작업 추가
+                    startActivity(new Intent(Floor2.this, Floor3.class));
+                    finish();
                 }
             });
         }
