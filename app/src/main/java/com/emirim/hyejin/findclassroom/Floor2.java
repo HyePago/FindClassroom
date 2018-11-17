@@ -27,16 +27,16 @@ public class Floor2  extends AppCompatActivity {
                 (ImageView)findViewById(R.id.td51), (ImageView)findViewById(R.id.td52),  (ImageView)findViewById(R.id.td53), (ImageView)findViewById(R.id.td54), (ImageView)findViewById(R.id.td55),  (ImageView)findViewById(R.id.td56),  (ImageView)findViewById(R.id.td57),  (ImageView)findViewById(R.id.td58), (ImageView)findViewById(R.id.td59), (ImageView)findViewById(R.id.td60),
         };
         spaceValue = new String[] {
-                "solution2", "solution2", null, "solution1", "solution1",
-                "solution2", "solution2", null, "solution1", "solution1",
-                "appban", "appban", null, null, null,
-                "jeonsan", "jeonsan", null, null, null,
-                "miben", "miben", null, "web", "web",
-                "design1", "design1", null, "jogyo", "jogyo",
-                "design1", "design1", null, "design2", "design2",
-                "appchang", "appchang", null, "design2", "design2",
-                "appchang", "appchang", null, "design2", "design2",
-                "appchang", "appchang", null, null, null,
+                "teacherRestRoom", "teacherRestRoom", null, "office3", "office3",
+                "teacherRestRoom", "teacherRestRoom", null, "office3", "office3",
+                "office2", "office2", null, null, null,
+                "office2", "office2", null, null, null,
+                "consultation", "consultation", null, "level1", "level1",
+                "sciencePreparation", "sciencePreparation", null, "level2", "level2",
+                "science", "science", null, "healthEducation", "healthEducation",
+                "science", "science", null, "healthEducation", "healthEducation",
+                "nursing", "nursing", null, "healthEducation", "healthEducation",
+                "nursing", "nursing", null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
         };
@@ -48,11 +48,17 @@ public class Floor2  extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(spaceValue[index] != null) {
-                        if (Data.answer[Data.currentStage - 1] == spaceValue[index]) {
+                        if (Data.answer[Data.currentStage - 1][Data.currentMissionStage - 1] == spaceValue[index]) {
                             if(Data.currentStage != 3) {
                                 Data.currentStage += 1;
                             }
                             // 정답일 경우 행동 **
+                            if(Data.currentMissionStage == 1) {
+                                Data.currentMissionStage ++;
+                            } else {
+                                // Stage 변경
+                                Data.currentStage ++;
+                            }
                         } else {
                             // 정답이 아닐 경우 행동 **
                         }
@@ -67,35 +73,6 @@ public class Floor2  extends AppCompatActivity {
             // space[i].setImageResource(투명한 네모) **
             space[i].setImageResource(R.drawable.square1); // 위에꺼 하면 이건 지워
         }
-        // 화살표 ***
-        //space[2].setImageResource();
-        //space[57].setImageResource();
-
-        // 위 화살표 -- 캐릭터 이동
-        /*space[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(Data.currentLocation != 7) {
-                    // space[Data.currentLocation].setImageResource(); -- 복도 Image로 변경 **
-                    space[Data.currentLocation].setImageResource(R.drawable.square1);
-                    Data.currentLocation -= 5;
-                    space[Data.currentLocation].setImageResource(R.drawable.character);
-                }
-            }
-        });
-
-        // 아래 화살표 -- 캐릭터 이동
-        space[57].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(Data.currentLocation != 52) {
-                    // space[Data.currentLocation].setImageResource(); -- 복도 Image로 변경 **
-                    space[Data.currentLocation].setImageResource(R.drawable.square1);
-                    Data.currentLocation += 5;
-                    space[Data.currentLocation].setImageResource(R.drawable.character);
-                }
-            }
-        });*/
 
         // 위 층
         for(int i = 13; i<=51; i+=38) {
@@ -122,9 +99,6 @@ public class Floor2  extends AppCompatActivity {
                 }
             });
         }
-        // 캐릭터의 위치 초기화
-        space[52].setImageResource(R.drawable.character);
-        Data.currentLocation = 52;
 
         // 솔루션 2실
         space[0].setImageResource(R.drawable.square2);
