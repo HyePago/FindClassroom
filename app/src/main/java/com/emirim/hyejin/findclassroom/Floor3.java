@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,7 @@ public class Floor3  extends AppCompatActivity {
     public ImageView hallway[];
     public String spaceValue[];
     public TextView timeText;
+    public CountDownTimer _timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,18 @@ public class Floor3  extends AppCompatActivity {
         // 현재 위치 저장
         Data.currentFloor = 3;
         timeText = (TextView)findViewById(R.id.timeText);
-        timeText.setText("3층");
+
+        _timer = new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                Data.time--;
+                timeText.setText(Data.time + "");
+            }
+
+            public void onFinish() {
+                // Intent
+            }
+        }.start();
 
         hallway = new ImageView[] {
                 (ImageView)findViewById(R.id.td61), (ImageView)findViewById(R.id.td62),  (ImageView)findViewById(R.id.td63), (ImageView)findViewById(R.id.td64), (ImageView)findViewById(R.id.td65)
@@ -63,11 +76,12 @@ public class Floor3  extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(spaceValue[index] != null) {
-                        final Dialog dialog = new Dialog(Floor3.this);
-                        dialog.setContentView(R.layout.dialog_modal);
-
-                        ImageView resultImage = (ImageView) findViewById(R.id.resultImage);
                         if (Data.answer[Data.currentStage - 1][Data.currentMissionStage - 1] == spaceValue[index]) {
+                            final Dialog dialog = new Dialog(Floor3.this);
+                            dialog.setContentView(R.layout.dialog_modal);
+
+                            ImageView resultImage = (ImageView) dialog.findViewById(R.id.resultImage);
+
                             if(Data.currentStage != 3) {
                                 Data.currentStage += 1;
                             }
@@ -77,24 +91,26 @@ public class Floor3  extends AppCompatActivity {
                             } else {
                                 // Stage 변경
                                 Data.currentStage ++;
+                                Data.time = 30;
 
                                 resultImage.setImageResource(R.drawable.success);
                             }
+
+                            try {
+                                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                dialog.show();
+
+                                new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                                    @Override
+                                    public void run() {
+                                        dialog.dismiss();
+                                    } }, 2000);
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             // 정답이 아닐 경우 행동 **
-                        }
-
-                        try {
-                            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                            dialog.show();
-
-                            new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
-                                 @Override
-                                 public void run() {
-                                    dialog.dismiss();
-                                 } }, 2000);
-                        } catch(Exception e) {
-                            e.printStackTrace();
+                            // Intent
                         }
                     }
                 }

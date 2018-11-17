@@ -6,4 +6,6 @@ public class Data {
     public static String[][] answer = {{"", ""}, {"", ""}, {"", ""}};
     public static int currentFloor = 2;
     public static int currentLocation = 0;
+
+    public static int time = 30;
 }
