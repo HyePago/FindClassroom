@@ -72,11 +72,12 @@ public class Floor2  extends AppCompatActivity {
         //space[57].setImageResource();
 
         // 위 화살표 -- 캐릭터 이동
-        space[2].setOnClickListener(new View.OnClickListener() {
+        /*space[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Data.currentLocation != 7) {
                     // space[Data.currentLocation].setImageResource(); -- 복도 Image로 변경 **
+                    space[Data.currentLocation].setImageResource(R.drawable.square1);
                     Data.currentLocation -= 5;
                     space[Data.currentLocation].setImageResource(R.drawable.character);
                 }
@@ -89,11 +90,12 @@ public class Floor2  extends AppCompatActivity {
             public void onClick(View v) {
                 if(Data.currentLocation != 52) {
                     // space[Data.currentLocation].setImageResource(); -- 복도 Image로 변경 **
+                    space[Data.currentLocation].setImageResource(R.drawable.square1);
                     Data.currentLocation += 5;
                     space[Data.currentLocation].setImageResource(R.drawable.character);
                 }
             }
-        });
+        });*/
 
         // 위 층
         for(int i = 13; i<=51; i+=38) {
@@ -200,6 +202,5 @@ public class Floor2  extends AppCompatActivity {
 
         // 화장실
         space[59].setImageResource(R.drawable.square2);
-
     }
 }
